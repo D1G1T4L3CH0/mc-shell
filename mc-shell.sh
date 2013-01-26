@@ -7,6 +7,9 @@
 # - exit codes are not being show in the log correctly. They are all 0.
 # - the exit code for closing a console like RemoteBukkit Console with CTRL+C is 130, so this always reports an error to the logfile.
 
+# NOTES:
+# - Maybe use start-stop-daemon for starting and stopping screen and the server. This will allow us to get the pid for monitoring if the server is still running. Example: https://gist.github.com/819348
+
 # The name of your screen session. This really doesn't matter to the user. But you should make sure it's set the same as in your launch script.
 screen_session_name="mine"
 
