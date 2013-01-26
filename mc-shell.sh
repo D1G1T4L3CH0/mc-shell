@@ -3,8 +3,12 @@
 # This was originally intended to be used as the default shell for a user with SSH access so it prevents the user from having full control on the server and gives them an easy interface to use.
 # Below are the settings you should change to meet the requirements of your own server.
 
+# KNOWN ISSUES:
+# - exit codes are not being show in the log correctly. They are all 0.
+# - the exit code for closing a console like RemoteBukkit Console with CTRL+C is 130, so this always reports an error to the logfile.
+
 # The name of your screen session. This really doesn't matter to the user. But you should make sure it's set the same as in your launch script.
-screen_session_name="mines"
+screen_session_name="mine"
 
 # For the paths below, use absolute paths to be sure the path is correctly found.
 
@@ -80,7 +84,8 @@ cd $craftbukkit_path
 while :
 	do
 		serverstatus="\033[31;1mOffline\033[m"
-#		version
+		# Disabled getting version because it didn't always work.
+		#version
 		screenrunning
 		if [ $? -eq 1 ]; then
 			serverstatus="\033[32;1mOnline\033[m"
@@ -88,7 +93,8 @@ while :
 		clear
 		echo -e "\033[36;1mMC-SHELL - Lightweight Remote Server Control$norm"
 		echo
-legend="\
+		# This should probably be done with printf...
+		legend="\
 Start/Stop $boldyellow[st]$norm\t\tView Log $boldyellow[log]$norm\t\tConsole $boldyellow[con]$norm\n\
 Restart $boldyellow[rs]$norm\t\tShow Errors $boldyellow[err]$norm\tExit $boldyellow[exit]$norm\n\
 Update $boldyellow[up]$norm\t\tClear Log $boldyellow[cl]$norm"
@@ -97,7 +103,8 @@ Update $boldyellow[up]$norm\t\tClear Log $boldyellow[cl]$norm"
 		echo -e "\033[1mServer Status:$norm $serverstatus"
 		echo -e "\033[34;1m$result_message$norm"
 		result_message=
-#		echo -e "\033[1mServer Version:$norm \033[34;1m$cbver$norm"
+		# Disabled getting version because it didn't always work.
+		#echo -e "\033[1mServer Version:$norm \033[34;1m$cbver$norm"
 		read -p "> " action
 		case $action in
 			st)
@@ -203,7 +210,7 @@ Update $boldyellow[up]$norm\t\tClear Log $boldyellow[cl]$norm"
 				if [ $? -ne 0 ]; then
 					echo "$(date +"%m-%d-%Y %r") -: ERROR :- Clear Log = Failed with exit code $?." &>> "$logfile"
 				fi
-				touch server.log
+				touch server.log # Make sure the file still exists so there are no complaints from cat or rm in the future.
 				result_message="Log Cleared."
 				;;
 			exit)
