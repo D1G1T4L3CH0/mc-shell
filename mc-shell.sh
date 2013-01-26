@@ -82,9 +82,8 @@ while :
 		serverstatus="\033[31;1mOffline\033[m"
 #		version
 		screenrunning
-		if [ $? -eq 1 ]
-			then
-				serverstatus="\033[32;1mOnline\033[m"
+		if [ $? -eq 1 ]; then
+			serverstatus="\033[32;1mOnline\033[m"
 		fi
 		clear
 		echo -e "\033[36;1mMC-SHELL - Lightweight Remote Server Control$norm"
@@ -121,28 +120,25 @@ Update $boldyellow[up]$norm\t\tClear Log $boldyellow[cl]$norm"
 				# Restart it.
 				echo "$(date +"%m-%d-%Y %r") -: STATUS :- Server Restarted" &>> "$logfile"
 				screenrunning
-				if [ $? -eq 1 ]
-					then
-						echo "Stopping server..."
-						stop-server
-						# Wait 10 seconds for the server to shut down.
-						# maybe this should see if the process has closed instead.
-						sleep 10
+				if [ $? -eq 1 ]; then
+					echo "Stopping server..."
+					stop-server
+					# Wait 10 seconds for the server to shut down.
+					# maybe this should see if the process has closed instead.
+					sleep 10
 				fi
 				screenrunning
-                                if [ $? -eq 0 ]
-                                        then
-						echo "Starting server..."
-						start-server
-						sleep 20
+				if [ $? -eq 0 ]; then
+					echo "Starting server..."
+					start-server
+					sleep 20
 				fi
 				result_message="Server was restarted."
 				;;
 			up)
 				# Update server.
 				screenrunning
-				if [ $? -ne 0 ]
-				then
+				if [ $? -ne 0 ]; then
 					result_message="Please stop the server first."
 					continue
 				fi
@@ -151,8 +147,7 @@ Update $boldyellow[up]$norm\t\tClear Log $boldyellow[cl]$norm"
 				echo "Are you sure you want to update the server? Type \"yes\" lowercase and without quotes to confirm."
 				echo "This may render some plugins unuseable. You will have to check them youself."
 				read confirm
-				if [ "$confirm" == "yes" ]
-				then
+				if [ "$confirm" == "yes" ]; then
 					echo "Updating server..."
 					echo "$(date +"%m-%d-%Y %r") -: STATUS :- Update Started" &>> "$logfile"
 					rm craftbukkit.jar 2>> "$logfile"
