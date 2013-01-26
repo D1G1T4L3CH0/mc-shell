@@ -9,7 +9,7 @@ screen_session_name="mines"
 # For the paths below, use absolute paths to be sure the path is correctly found.
 
 # The path and filename of the log file. Choose where you want the log file stored. If you don't want a log file, just set it to /var/tmp/somefile.name.
-logfile="$HOME/mcshell.log"
+logfile="$HOME/mc-shell.log"
 
 # Where is your craftbukkit directory? Do not use ~. You may however use $HOME to indicate your home directory.
 craftbukkit_path="$HOME/craftbukkit"
@@ -36,7 +36,7 @@ function version {
 	if screenrunning; then cbver="server not running"; return 1; fi
 	screen -S mines -X stuff $'version\n'
 	sleep .1 # This because for some reason the version isn't printed before hardcopy is able to copy it or hardcopy has some problem.
-	tempfile="/var/tmp/mcshell-$RANDOM.tmp"
+	tempfile="/var/tmp/mc-shell-$RANDOM.tmp"
 	screen -S "$screen_session_name" -X hardcopy "$tempfile"
 	cbver=$(cat "$tempfile" | grep "This server is running CraftBukkit version" -m 1 | cut -f 9 -d' ' | cut -f 3-4 -d'-')
 	rm "$tempfile"
@@ -87,7 +87,7 @@ while :
 				serverstatus="\033[32;1mOnline\033[m"
 		fi
 		clear
-		echo -e "\033[36;1mMCSHELL - Lightweight Remote Server Control$norm"
+		echo -e "\033[36;1mMC-SHELL - Lightweight Remote Server Control$norm"
 		echo
 legend="\
 Start/Stop $boldyellow[st]$norm\t\tView Log $boldyellow[log]$norm\t\tConsole $boldyellow[con]$norm\n\
