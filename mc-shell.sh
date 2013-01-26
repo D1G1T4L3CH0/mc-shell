@@ -32,7 +32,6 @@ console_quit_reminder="REMEMBER:\nIn order to exit your console session, you mus
 
 
 function version {
-	screenrunning
 	if screenrunning; then cbver="server not running"; return 1; fi
 	screen -S mines -X stuff $'version\n'
 	sleep .1 # This because for some reason the version isn't printed before hardcopy is able to copy it or hardcopy has some problem.
@@ -72,6 +71,7 @@ clear
 action=""
 result_message=""
 norm="\033[m"
+# I'm not sure why the following two didn't work...
 #boldgreen="\033[32;1m"
 #boldred="\033[31;1m"
 boldyellow="\033[33;1m"
