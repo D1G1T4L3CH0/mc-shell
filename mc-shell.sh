@@ -1,14 +1,21 @@
 #!/bin/bash
 
-# This was originally intended to be used as the default shell for a user with SSH access so it prevents the user from having full control on the server and gives them an easy interface to use.
-# Below are the settings you should change to meet the requirements of your own server.
+# This was originally intended to be used as the default shell for a user with SSH access so it prevents the user from having full control on the server and gives them an easy interface to use. This is the user's preferred method of server administration after using some web interfaces and finding that none of them are ideal, and some are just hard to work with.
 
 # KNOWN ISSUES:
 # - exit codes are not being show in the log correctly. They are all 0.
 # - the exit code for closing a console like RemoteBukkit Console with CTRL+C is 130, so this always reports an error to the logfile.
 
-# NOTES:
+# DEVELOPMENT NOTES:
+# - A way to restart the server if it's crashed.
 # - Maybe use start-stop-daemon for starting and stopping screen and the server. This will allow us to get the pid for monitoring if the server is still running. Example: https://gist.github.com/819348
+# - Check for dependencies.
+# - Ramdisk for world files? Is that even needed on a Linux server?
+# - Sheduler
+
+# - - - - - - - - - - - -
+
+# Below are the settings you should change to meet the requirements of your own server.
 
 # The name of your screen session. This really doesn't matter to the user. But you should make sure it's set the same as in your launch script.
 screen_session_name="mine"
@@ -38,6 +45,7 @@ console_start_command="screen -r $screen_session_name"
 console_quit_reminder="REMEMBER:\nIn order to exit your console session, you must press CTRL+a then d."
 
 
+# This is not being used because it wasn't always working. Sometimes "version\n" wasn't sent at all until after I attached to the screen session at least once.
 function version {
 	if screenrunning; then cbver="server not running"; return 1; fi
 	screen -S mines -X stuff $'version\n'
