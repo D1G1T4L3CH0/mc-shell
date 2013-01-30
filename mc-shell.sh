@@ -58,7 +58,7 @@ function version {
 }
 
 function screenrunning {
-	if [ "$(ls /var/run/screen/S-$USER | grep $screen_session_name)" = "$screen_session_name" ]; then
+	if [ "$(ls /var/run/screen/S-$USER | grep "mines" | cut -d . -f 2-)" = "$screen_session_name" ]; then
 	# Old method of finding screen session.
 	#if [ "$(screen -ls | grep "$screen_session_name" | cut -f2 | cut -d. -f2-3)" = "$screen_session_name" ]; then
 		echo "$(date +"%m-%d-%Y %r") -: STATUS :- Screen Running Check = TRUE" &>> "$logfile"
